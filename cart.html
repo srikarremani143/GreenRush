@@ -29,7 +29,7 @@
         {% for plant in selected_plants %}
         <div class="col-md-4">
             <div class="card plant-card p-3">
-                <img src="/static/images/{{ plant.image }}" class="card-img-top" alt="{{ plant.name }}" style="height: 200px; object-fit: cover;">
+                <img src="/images/{{ plant.image }}" class="card-img-top" alt="{{ plant.name }}" style="height: 200px; object-fit: cover;">
                 <div class="card-body">
                     <h4 class="card-title">{{ plant.name }}</h4>
                     <p class="card-text">Price: ₹{{ plant.price }}</p>

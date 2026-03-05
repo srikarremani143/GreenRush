@@ -1,9 +1,10 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+import os
+from flask import Flask, render_template, request, redirect, url_for, session, send_from_directory
 
 app = Flask(__name__, template_folder=".")
-app.secret_key = "green-rush-secret-key-change-in-production"
+app.secret_key = os.environ.get("SECRET_KEY", "green-rush-secret-key-change-in-production")
 
-# Plant data (id, name, price, image filename) - your images in static/images/
+# Plant data (id, name, price, image filename) - images in repo root, served at /images/
 plants = [
     {"id": 1, "name": "Rose", "price": 50, "image": "Rose.jpg"},
     {"id": 2, "name": "Orchid", "price": 150, "image": "Moth-orchid.jpg.webp"},
@@ -19,6 +20,12 @@ users = {}
 # In-memory orders (for demo)
 orders = {}
 _next_order_id = 1
+
+
+@app.route("/images/<path:filename>")
+def serve_image(filename):
+    """Serve plant images from repo root (for deployment where images are in root)."""
+    return send_from_directory(".", filename)
 
 
 def _get_cart_from_session():
